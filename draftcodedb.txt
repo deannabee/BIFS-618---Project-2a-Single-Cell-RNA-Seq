@@ -30,7 +30,7 @@ sc.settings.set_figure_params(dpi=50, facecolor="white")
 adata = sc.datasets.pbmc3k()
 print(adata)
 
-# Add a sample label so the rest of your code works unchanged
+# Add a sample label
 adata.obs["sample"] = "pbmc3k"
 adata.obs["sample"] = adata.obs["sample"].astype("category")
 
@@ -59,10 +59,6 @@ from tkinter import messagebox
 msg = f"""
 QC Summary:
 
-{adata.obs[qc_cols].describe()}
-
-
-
 Cells: {adata.n_obs}
 Genes: {adata.n_vars}
 
@@ -85,23 +81,38 @@ Continue with analysis?
 if not messagebox.askyesno("QC Check", msg):
     sys.exit("Analysis stopped by user")
 
+# ============================
+# PREPROCESSING
+# ============================
+
+# Makes gene names unique by appending suffixes where needed.
+# You call this TWICE (redundant).
+# You only need to do it once, and usually right after loading.
+adata.var_names_make_unique()
+adata.var_names_make_unique()
+
+# Plot the top expressed genes across cells (diagnostic)
+# This will save to sc.settings.figdir because autosave=True
+sc.pl.highest_expr_genes(adata, n_top=20)
+
 
 # Violin plots
 sc.pl.violin(
     adata,
     ["n_genes_by_counts", "total_counts", "pct_counts_mt"],
     jitter=0.4,
-    multi_panel=True,
+    muSlti_panel=True,
 )
 
 sc.pl.scatter(adata, "total_counts", "n_genes_by_counts", color="pct_counts_mt")
 
-sc.pp.filter_cells(adata, min_genes=100)
+sc.pp.filter_cells(adata, min_genes=200)
 sc.pp.filter_genes(adata, min_cells=3)
 
 
 # DOUBLETS (optional)
-sc.pp.scrublet(adata, batch_key="sample")
+# Added random_state=42 for reproducibility in doublet simulation
+sc.pp.scrublet(adata, batch_key="sample", random_state=42)
 
 
 # NORMALIZATION
@@ -133,17 +144,17 @@ print("Feature Selection Complete")
 
 
 # PCA / UMAP / CLUSTERING
-
-sc.tl.pca(adata)
+# Added random_state=42 to PCA, neighbors, UMAP, and Leiden for full reproducibility
+sc.tl.pca(adata, random_state=42)
 sc.pl.pca_variance_ratio(adata, n_pcs=50, log=True)
 
-sc.pp.neighbors(adata)
-sc.tl.umap(adata)
+sc.pp.neighbors(adata, random_state=42)
+sc.tl.umap(adata, random_state=42)
 
 sc.pl.umap(adata, color="sample", size=2)
 print("Neighbors/UMAP Complete")
 
-sc.tl.leiden(adata, flavor="igraph", n_iterations=2)
+sc.tl.leiden(adata, flavor="igraph", n_iterations=2, random_state=42)
 sc.pl.umap(adata, color=["leiden"])
 print("Clustering Complete")
 
@@ -163,6 +174,15 @@ cluster_to_celltype = {
     '6': 'Dendritic cells',
     '7': 'Megakaryocytes'
 }
+
+# Dotplot of marker expression by cluster
+# Will error if any marker gene isn't present in adata.var_names
+sc.pl.dotplot(
+    adata,
+    pbmc_markers,
+    groupby="leiden",
+    standard_scale="var"
+)
 
 adata.obs["cell_type"] = (
     adata.obs["leiden"].astype(str)
