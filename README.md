@@ -1,21 +1,10 @@
-````markdown
 # BIFS 618 — Project 2a: Single Cell RNA-Seq Analysis
 
 ## Overview
 
-This project reimplements the legacy Scanpy workflow on the 10x Genomics PBMC 3k dataset as a single, reproducible master pipeline script. The objective is to reproduce a complete single-cell RNA-seq (scRNA-seq) analysis workflow, from raw count data through quality control, normalization, dimensionality reduction, clustering, and cell type annotation, using a self-contained and reproducible pipeline.
+This project reimplements the Scanpy legacy workflow on the 3k PBMC dataset as a single master pipeline script. The goal is to reproduce a standard scRNA-seq analysis, from raw count data through quality control, normalization, dimensionality reduction, clustering, and cell type annotation, in a reproducible and self-contained pipeline.
 
-The analysis follows Scanpy best practices while enforcing deterministic behavior through a fixed random seed.
-
----
-
-## Dataset
-
-- **10x Genomics PBMC 3k dataset**
-- Peripheral Blood Mononuclear Cells (PBMCs)
-- Approximately 3,000 cells profiled using 10x Genomics Chromium technology
-
----
+The dataset used is the 10x Genomics PBMC 3k dataset
 
 ## Project Structure
 
@@ -28,9 +17,6 @@ BIFS-618---Project-2a-Single-Cell-RNA-Seq/
     ├── README.md
     ├── scanpy_master_logs_seed_v3.py
     └── run_scanpy_pipeline.sh
-````
-
-***
 
 ## Pipeline Summary
 
