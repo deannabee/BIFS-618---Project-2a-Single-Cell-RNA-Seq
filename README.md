@@ -17,6 +17,7 @@ BIFS-618---Project-2a-Single-Cell-RNA-Seq/
     ├── README.md
     ├── scanpy_master_logs_seed_v3.py
     └── run_scanpy_pipeline.sh
+```
 
 ## Pipeline Summary
 
