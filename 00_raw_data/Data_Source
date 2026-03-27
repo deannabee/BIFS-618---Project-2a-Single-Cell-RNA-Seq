@@ -1,0 +1,17 @@
+```text
+Dataset name: PBMC 3k (Peripheral Blood Mononuclear Cells)
+
+Original data source:
+10x Genomics — 3k PBMCs from a Healthy Donor
+https://www.10xgenomics.com/datasets/3-k-pbm-cs-from-a-healthy-donor-1-standard-1-1-0
+
+Access method used in this project:
+Scanpy built-in dataset loader
+sc.datasets.pbmc3k()
+
+Scanpy documentation:
+https://scanpy.readthedocs.io/en/stable/generated/scanpy.datasets.pbmc3k.html
+
+Notes:
+The dataset is downloaded automatically by Scanpy at runtime.
+No raw data files are stored in this repository.
