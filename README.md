@@ -1,4 +1,4 @@
-# BIFS 618 — Project 2a: Single Cell RNA-Seq Analysis
+# BIOT 670I — Project 2a: Single Cell RNA-Seq Analysis
 
 ## Overview
 
@@ -9,7 +9,7 @@ The dataset used is the 10x Genomics PBMC 3k dataset
 ## Project Structure
 
 ```text
-BIFS-618---Project-2a-Single-Cell-RNA-Seq/
+BIOT 670I---Project-2a-Single-Cell-RNA-Seq/
 │
 ├── README.md
 │
@@ -58,4 +58,4 @@ Each execution produces a `run_log.txt` file documenting execution metadata, pac
 
 ## Group
 
-**Group 2 — BIFS 618**
+**Group 2a — BIOT 670I**
